@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/></marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity=".14"/></filter>
+  </defs>
+  <rect width="1400" height="820" fill="#fbfaf5"/>
+  <text x="700" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#172033">Archvialia — PS038 Microservices Architecture</text>
+  <text x="700" y="88" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#667085">Enterprise Academic E-Library &amp; Digital Resource Circulation System</text>
+
+  <g filter="url(#shadow)">
+    <rect x="520" y="120" width="360" height="78" rx="16" fill="#ffffff" stroke="#c9ced8" stroke-width="2"/>
+    <text x="700" y="154" text-anchor="middle" font-family="Arial" font-size="22" font-weight="700" fill="#172033">React + Vite Frontend</text>
+    <text x="700" y="181" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Users • Faculty • Librarian/Admin</text>
+  </g>
+  <line x1="700" y1="198" x2="700" y2="250" stroke="#4b5563" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="500" y="250" width="400" height="82" rx="16" fill="#ffffff" stroke="#c9ced8" stroke-width="2"/>
+    <text x="700" y="284" text-anchor="middle" font-family="Arial" font-size="23" font-weight="700" fill="#172033">Spring Cloud API Gateway</text>
+    <text x="700" y="311" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Single entry point • JWT-aware routing • Load-balanced lb:// routes</text>
+  </g>
+
+  <line x1="500" y1="291" x2="245" y2="390" stroke="#4b5563" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="600" y1="332" x2="500" y2="390" stroke="#4b5563" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="700" y1="332" x2="700" y2="390" stroke="#4b5563" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="800" y1="332" x2="900" y2="390" stroke="#4b5563" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="900" y1="291" x2="1155" y2="390" stroke="#4b5563" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="90" y="390" width="310" height="112" rx="16" fill="#fff" stroke="#b8c7d9" stroke-width="2"/>
+    <text x="245" y="427" text-anchor="middle" font-family="Arial" font-size="23" font-weight="700" fill="#172033">Auth Service</text>
+    <text x="245" y="454" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Registration • Login • Password</text>
+    <text x="245" y="478" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">JWT issuance • RBAC</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="410" y="390" width="310" height="112" rx="16" fill="#fff" stroke="#b8c7d9" stroke-width="2"/>
+    <text x="565" y="427" text-anchor="middle" font-family="Arial" font-size="23" font-weight="700" fill="#172033">Book Service</text>
+    <text x="565" y="454" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Catalog • Search • E-books</text>
+    <text x="565" y="478" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Copy availability</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="730" y="390" width="310" height="112" rx="16" fill="#fff" stroke="#b8c7d9" stroke-width="2"/>
+    <text x="885" y="427" text-anchor="middle" font-family="Arial" font-size="23" font-weight="700" fill="#172033">Borrow Service</text>
+    <text x="885" y="454" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Loan lifecycle • Due dates</text>
+    <text x="885" y="478" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Return orchestration</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1050" y="390" width="310" height="112" rx="16" fill="#fff" stroke="#b8c7d9" stroke-width="2"/>
+    <text x="1205" y="427" text-anchor="middle" font-family="Arial" font-size="23" font-weight="700" fill="#172033">Fine Service</text>
+    <text x="1205" y="454" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Overdue days • Fine amount</text>
+    <text x="1205" y="478" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Fine history</text>
+  </g>
+
+  <line x1="885" y1="502" x2="565" y2="570" stroke="#7a8797" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="885" y1="502" x2="1205" y2="570" stroke="#7a8797" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="725" y="548" text-anchor="middle" font-family="Arial" font-size="14" fill="#667085">Inter-service communication</text>
+
+  <g filter="url(#shadow)">
+    <rect x="360" y="570" width="410" height="108" rx="16" fill="#ffffff" stroke="#b8c7d9" stroke-width="2"/>
+    <text x="565" y="607" text-anchor="middle" font-family="Arial" font-size="23" font-weight="700" fill="#172033">Eureka Service Registry</text>
+    <text x="565" y="634" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Service registration &amp; discovery</text>
+    <text x="565" y="658" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Supports dynamic load-balanced routing</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="800" y="570" width="410" height="108" rx="16" fill="#ffffff" stroke="#b8c7d9" stroke-width="2"/>
+    <text x="1005" y="607" text-anchor="middle" font-family="Arial" font-size="23" font-weight="700" fill="#172033">PostgreSQL</text>
+    <text x="1005" y="634" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Persistent application data</text>
+    <text x="1005" y="658" text-anchor="middle" font-family="Arial" font-size="15" fill="#667085">Academic reference deployment</text>
+  </g>
+  <line x1="565" y1="502" x2="565" y2="570" stroke="#9aa4b2" stroke-width="2" stroke-dasharray="7 7"/>
+  <line x1="1205" y1="502" x2="1205" y2="570" stroke="#9aa4b2" stroke-width="2" stroke-dasharray="7 7"/>
+  <line x1="565" y1="678" x2="565" y2="730" stroke="#4b5563" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="1005" y1="678" x2="1005" y2="730" stroke="#4b5563" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="280" y="730" width="840" height="58" rx="14" fill="#172033"/>
+  <text x="700" y="766" text-anchor="middle" font-family="Arial" font-size="18" font-weight="700" fill="#ffffff">Docker Compose • 8 containers • One reproducible deployment</text>
+</svg>

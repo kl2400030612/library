@@ -1,0 +1,156 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-archvialia}
+      POSTGRES_USER: ${POSTGRES_USER:-archvialia}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-archvialia} -d ${POSTGRES_DB:-archvialia}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [archvialia]
+
+  eureka-server:
+    restart: unless-stopped
+    build:
+      context: ./backend
+      dockerfile: ./eureka-server/Dockerfile
+    environment:
+      EUREKA_HOST: eureka-server
+    networks: [archvialia]
+
+  auth-service:
+    restart: unless-stopped
+    build:
+      context: ./backend
+      dockerfile: ./auth-service/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-archvialia}
+      DB_USERNAME: ${POSTGRES_USER:-archvialia}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      JWT_SECRET: ${JWT_SECRET:-change-this-to-a-long-random-secret-at-least-32-characters}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-3600000}
+      SEED_DEMO_DATA: ${SEED_DEMO_DATA:-true}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@archvialia.local}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-Admin@12345}
+      SEED_USER_EMAIL: ${SEED_USER_EMAIL:-user@archvialia.local}
+      SEED_USER_PASSWORD: ${SEED_USER_PASSWORD:-User@12345}
+    networks: [archvialia]
+
+  book-service:
+    restart: unless-stopped
+    build:
+      context: ./backend
+      dockerfile: ./book-service/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-archvialia}
+      DB_USERNAME: ${POSTGRES_USER:-archvialia}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      JWT_SECRET: ${JWT_SECRET:-change-this-to-a-long-random-secret-at-least-32-characters}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-3600000}
+      SEED_DEMO_DATA: ${SEED_DEMO_DATA:-true}
+    networks: [archvialia]
+
+  fine-service:
+    restart: unless-stopped
+    build:
+      context: ./backend
+      dockerfile: ./fine-service/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-archvialia}
+      DB_USERNAME: ${POSTGRES_USER:-archvialia}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      JWT_SECRET: ${JWT_SECRET:-change-this-to-a-long-random-secret-at-least-32-characters}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-3600000}
+      FINE_DAILY_RATE: ${FINE_DAILY_RATE:-10.00}
+    networks: [archvialia]
+
+  borrow-service:
+    restart: unless-stopped
+    build:
+      context: ./backend
+      dockerfile: ./borrow-service/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+      book-service:
+        condition: service_started
+      fine-service:
+        condition: service_started
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-archvialia}
+      DB_USERNAME: ${POSTGRES_USER:-archvialia}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      JWT_SECRET: ${JWT_SECRET:-change-this-to-a-long-random-secret-at-least-32-characters}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-3600000}
+      LOAN_DAYS: ${LOAN_DAYS:-14}
+    networks: [archvialia]
+
+  api-gateway:
+    restart: unless-stopped
+    build:
+      context: ./backend
+      dockerfile: ./api-gateway/Dockerfile
+    depends_on:
+      eureka-server:
+        condition: service_started
+      auth-service:
+        condition: service_started
+      book-service:
+        condition: service_started
+      borrow-service:
+        condition: service_started
+      fine-service:
+        condition: service_started
+    environment:
+      EUREKA_URL: http://eureka-server:8761/eureka/
+    ports:
+      - "8080:8080"
+    networks: [archvialia]
+
+  frontend:
+    restart: unless-stopped
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:-}
+    depends_on:
+      - api-gateway
+    ports:
+      - "5173:80"
+    networks: [archvialia]
+
+volumes:
+  postgres_data:
+    external: true
+    name: archvialia-e-library_postgres_data
+
+networks:
+  archvialia:
+    driver: bridge

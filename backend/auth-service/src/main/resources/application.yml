@@ -1,0 +1,39 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: auth-service
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/archvialia}
+    username: ${DB_USERNAME:archvialia}
+    password: ${DB_PASSWORD:change-me}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+    initial-instance-info-replication-interval-seconds: 1
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:change-this-to-a-long-random-secret-at-least-32-characters}
+    expiration-ms: ${JWT_EXPIRATION_MS:3600000}
+  seed-demo-data: ${SEED_DEMO_DATA:false}
+  seed-admin-email: ${SEED_ADMIN_EMAIL:admin@archvialia.local}
+  seed-admin-password: ${SEED_ADMIN_PASSWORD:Admin@12345}
+  seed-user-email: ${SEED_USER_EMAIL:user@archvialia.local}
+  seed-user-password: ${SEED_USER_PASSWORD:User@12345}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

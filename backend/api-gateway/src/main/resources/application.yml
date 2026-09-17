@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth-service
+              uri: lb://AUTH-SERVICE
+              predicates: [ Path=/api/auth/** ]
+            - id: book-service
+              uri: lb://BOOK-SERVICE
+              predicates: [ Path=/api/books/** ]
+            - id: borrow-service
+              uri: lb://BORROW-SERVICE
+              predicates: [ Path=/api/borrow/** ]
+            - id: fine-service
+              uri: lb://FINE-SERVICE
+              predicates: [ Path=/api/fines/** ]
+          discovery:
+            locator:
+              enabled: false
+          globalcors:
+            add-to-simple-url-handler-mapping: true
+            cors-configurations:
+              '[/**]':
+                allowedOrigins:
+                  - "http://localhost:5173"
+                  - "http://127.0.0.1:5173"
+                  - "http://localhost:3000"
+                  - "http://127.0.0.1:3000"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - OPTIONS
+                allowedHeaders:
+                  - "*"
+                allowCredentials: true
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+    initial-instance-info-replication-interval-seconds: 1
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
